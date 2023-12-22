@@ -35,6 +35,13 @@ process.on('crash', (message) => {
   })
 })
 
+process.on('log', (message) => {
+  app.get('/status', (req, res) => {
+    res.send(`${message}`)
+  })
+})
+
+
 app.get('/restart', (req, res) => {
   res.send('restarted.')
   process.restart()
