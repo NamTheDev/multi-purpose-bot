@@ -18,32 +18,13 @@ process.on('restart', () => {
   console.log('restarted.')
 })
 
-process.on('exit', (message) => {
-  app.get('/status', (req, res) => {
-    res.send(`${message}`)
-  })
-})
-
-process.on('crash', (message) => {
-  app.get('/status', (req, res) => {
-    res.send(`${message}`)
-  })
-})
-
-process.on('log', (message) => {
-  app.get('/status', (req, res) => {
-    res.send(`${message}`)
-  })
-})
-
-
 app.get('/restart', (req, res) => {
   res.send('restarted.')
   process.restart()
 });
 
 app.use((req, res) => {
-  res.redirect('/status')
+  res.redirect('/restart')
 })
 
 module.exports = app
