@@ -1,4 +1,4 @@
-const client = require("..")
+const { client, commands } = require("..")
 
 client.on('messageCreate', async (message) => {
     const args = message.content

@@ -5,7 +5,6 @@ require('dotenv')
 const client = new Client(process.env.TOKEN, {
     intents: ['all']
 })
-module.exports = client
 
 const categories = readdirSync(`${__dirname}/commands`)
 const commands = []
@@ -15,6 +14,8 @@ for (const category of categories) {
         commands.push(commandData)
     }
 }
+
+module.exports = { client, commands }
 
 const events = readdirSync(`${__dirname}/events`)
 for (const eventFile of events) {

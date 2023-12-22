@@ -11,7 +11,6 @@ module.exports = {
          * @returns 
          */
         async (client, message, args) => {
-            console.log(args)
             return message.channel.createMessage(`# Pong! 🏓\n\`\`\`${Date.now() - message.timestamp}ms\`\`\``)
         }
 }
