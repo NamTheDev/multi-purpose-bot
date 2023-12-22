@@ -22,6 +22,4 @@ for (const eventFile of events) {
     require(`${__dirname}/events/${eventFile}`)
 }
 
-
-
 client.connect();
