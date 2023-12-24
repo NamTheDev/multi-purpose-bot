@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "git pull https://github.com/KainTheDev/multi-purpose-bot.git && node src/index.js",
+    "start": "git pull https://github.com/KainTheDev/multi-purpose-bot.git && npm i && node src/index.js",
     "run": "npx nodemon --watch index.js"
   },
   "author": "",
