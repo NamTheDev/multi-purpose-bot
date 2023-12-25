@@ -10,7 +10,7 @@ const categories = readdirSync(`${__dirname}/commands`)
 const commands = []
 for (const category of categories) {
     for (const commandFile of readdirSync(`${__dirname}/commands/${category}`)) {
-        const commandData = require(`${__dirname}/commands/${categories}/${commandFile}`)
+        const commandData = require(`${__dirname}/commands/${category}/${commandFile}`)
         commands.push(commandData)
     }
 }
