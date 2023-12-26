@@ -52,4 +52,4 @@ module.exports = new Command('scramble',
                     return message.channel.createMessage(`# Out of time.\n> The word is: **${original}**`)
                 }
             })
-    }, { description: 'scramble command game' })
+    }, { description: 'Guess the scrambled word', fullDescription: 'A game for guessing scrambled word.\n> **Words are generated using this API**: https://random-word-api.vercel.app.' })

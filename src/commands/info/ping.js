@@ -4,7 +4,7 @@ const { client } = require("../..");
 module.exports = new Command('ping',
     /**
      * 
-     * @param {Mesasge} message 
+     * @param {Message} message 
      * @param {string[]} args 
      * @returns 
      */
@@ -12,6 +12,6 @@ module.exports = new Command('ping',
         return message.channel.createMessage(`# Pong! 🏓\n\`\`\`${Date.now() - message.timestamp}ms\`\`\``)
     },
     {
-        description: 'ping pong command'
+        description: 'Ping pong command'
     }
 )
