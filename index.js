@@ -26,4 +26,5 @@ app.get('/restart', (req, res) => {
 app.use((req, res) => {
   res.redirect('/restart')
 })
+
 module.exports = app

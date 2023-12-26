@@ -1,18 +1,18 @@
-const { Client, Message } = require("eris");
+const { Client, Message, Command } = require("eris");
 const { MessageCollector } = require("eris-collects");
 const { readFileSync } = require("fs");
 const ms = require("ms");
 const getScrambledWordQuestions = require("multi-purpose/utils/getScrambledWordQuestions");
+const { client } = require("../..");
 
-module.exports = {
-    name: 'scramble',
+module.exports = new Command('scramble',
     /**
      * 
-     * @param {Client} client 
      * @param {Message} message 
      * @param {string[]} args 
      */
-    callback: async (client, message, args) => {
+    async function (message, args) {
+        console.log(args)
         const scramble = await getScrambledWordQuestions({ words: 10 })
         const { original, scrambled } = scramble[Math.floor(scramble.length * Math.random())]
         const time = '10'
@@ -21,9 +21,11 @@ module.exports = {
             filter: (msg) => msg.author.id === message.author.id,
             time: ms(`${time} seconds`)
         })
-        const image = readFileSync('src/assets/countdown.gif').toJSON().data
-        console.log(image)
-        await message.channel.createMessage({content: `# Scrambled word game! Guess the word:\n\`\`\`${scrambled}\`\`\`\n> You only have ${time} seconds left so quick!`, file: {name: 'countdown.gif', file: image}})
+        await message.channel.createMessage(
+            {
+                content: `# Scrambled word game! Guess the word:\n\`\`\`${scrambled}\`\`\`\n> You only have **${time} seconds** left so quick!`
+            }
+        )
         await message.channel.sendTyping()
         collector.on('collect',
             /**
@@ -50,5 +52,4 @@ module.exports = {
                     return message.channel.createMessage(`# Out of time.\n> The word is: **${original}**`)
                 }
             })
-    }
-}
+    }, { description: 'scramble command game' })

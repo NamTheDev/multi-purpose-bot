@@ -1,16 +1,17 @@
-const { Message, Client } = require("eris");
+const { Message, Command } = require("eris");
+const { client } = require("../..");
 
-module.exports = {
-    name: 'ping',
-    callback:
-        /**
-         * 
-         * @param {Client} client 
-         * @param {Message} message 
-         * @param {string[]} args 
-         * @returns 
-         */
-        async (client, message, args) => {
-            return message.channel.createMessage(`# Pong! 🏓\n\`\`\`${message.timestamp - Date.now()}ms\`\`\``)
-        }
-}
+module.exports = new Command('ping',
+    /**
+     * 
+     * @param {Mesasge} message 
+     * @param {string[]} args 
+     * @returns 
+     */
+    async function (message, args) {
+        return message.channel.createMessage(`# Pong! 🏓\n\`\`\`${Date.now() - message.timestamp}ms\`\`\``)
+    },
+    {
+        description: 'ping pong command'
+    }
+)
