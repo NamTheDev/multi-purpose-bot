@@ -1,10 +1,7 @@
 const { Command, Message } = require("eris");
-const { default: fetch } = require("node-fetch");
-async function Fetch(category, endpoint, query) {
-    const response = await fetch(`https://some-random-api.com/${category}/${endpoint}?${query.join('&')}`)
-    const data = await response.json()
-    return data
-}
+const { chunkArray, SRA_Fetch, Embed, Button, ButtonStyles, Emoji } = require("../../../utils");
+const Color = require('color');
+const { client } = require("../..");
 const subCommands = [
     new Command('lyrics',
         /**
@@ -13,35 +10,40 @@ const subCommands = [
          * @param {string[]} args 
          */
         async function (message, args) {
-            args.shift()
             try {
-                const {lyrics, error} = await Fetch('others', 'lyrics', [`title=${args[0]}`])
-                if(error) throw (error);
+                const { lyrics, title, author, thumbnail, links, disclaimer, error } = await SRA_Fetch('others', 'lyrics', [args.join(' ') ? `title=${args.join(' ')}` : ''])
+                if (error) throw (error);
+                const thumbnailUrl = thumbnail.genius
+                const geniusLink = links.genius
                 const arrayOfLyrics = lyrics.split('\n')
-
-                function chunkArray(size, array) {
-                    let num = 0;
-                    const result = [];
-                    let copy = [...array];
-
-                    while (copy.length !== 0) {
-                        result.push(copy.splice(0, size).filter(item => item !== ''));
-                        num += size;
+                const chunkedArray = chunkArray(20, arrayOfLyrics);
+                const defaultEmbed = new Embed({
+                    title: `*${title}* - **${author}**`,
+                    url: geniusLink,
+                    description: '> ⚠️ **Disclaimer** ⚠️:\n' + disclaimer,
+                    thumbnail: {
+                        url: thumbnailUrl
                     }
-
-                    return result;
-                }
-
-                const chunkedArray = chunkArray(5, arrayOfLyrics);
+                })
+                const embeds = []
                 for (const lyricsArray of chunkedArray) {
-                    await message.channel.createMessage(`${lyricsArray.join(' ')}\n`)
+                    embeds.push(new Embed({ description: `${lyricsArray.join('\n')}` }))
                 }
+                await message.channel.createMessage({
+                    embeds: [
+                        defaultEmbed,
+                        embeds[0]
+                    ],
+                    components: [
+                        new Button({ style: ButtonStyles.Primary, emoji: new Emoji('➡️'), custom_id: 'next_page' })
+                    ]
+                })
             } catch (e) {
                 await message.channel.createMessage({
                     embed: {
                         title: 'Error:',
                         description: `\`\`\`${e}\`\`\``,
-                        color: 15548997
+                        color: Color({ keyword: 'red' }).rgbNumber()
                     }
                 })
             }
@@ -58,6 +60,7 @@ const command = new Command('some-random-api',
     async function (message, args) {
         const subCommand = subCommands.find(subCommand => subCommand.label === args[0])
         if (subCommand) {
+            args.shift()
             return await subCommand.executeCommand(message, args)
         }
         return await message.channel.createMessage({ content: `# Some random API command\nAvailable subcommands:\`\`\`${subCommands.map(cmd => `${cmd.label} - ${cmd.description}\n`)}\`\`\`` })

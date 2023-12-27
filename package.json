@@ -12,6 +12,7 @@
   "keywords": [],
   "description": "",
   "dependencies": {
+    "color": "^4.2.3",
     "dotenv": "^16.3.1",
     "eris": "^0.17.2",
     "eris-collects": "^1.0.0",

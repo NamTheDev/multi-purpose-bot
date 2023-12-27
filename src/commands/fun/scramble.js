@@ -1,6 +1,5 @@
 const { Client, Message, Command } = require("eris");
 const { MessageCollector } = require("eris-collects");
-const { readFileSync } = require("fs");
 const ms = require("ms");
 const getScrambledWordQuestions = require("multi-purpose/utils/getScrambledWordQuestions");
 const { client } = require("../..");
