@@ -1,3 +1,7 @@
+const { readdirSync } = require("fs");
+const { default: fetch } = require("node-fetch");
+const { join } = require("path");
+
 function chunkArray(size, array) {
     let num = 0;
     const result = [];
@@ -11,9 +15,8 @@ function chunkArray(size, array) {
     return result.filter(array => array.length !== 0);
 }
 
-const { default: fetch } = require("node-fetch");
 async function SRA_Fetch(category, endpoint, query) {
-    const response = await fetch(`https://some-random-api.com/${category}/${endpoint}?${query.join('&')}`)
+    const response = await fetch(`https://some-random-api.com/${category}/${endpoint}?${query ? query.join('&') : ''}`)
     const data = await response.json()
     return data
 }
@@ -56,13 +59,13 @@ class Button {
      * @returns {object}
      */
     constructor(json) {
-         function extend(destination, source) {   
+        function extend(destination, source) {
             for (var property in source) {
                 destination[property] = source[property];
             }
             return destination;
         };
-        extend(json, {type: 2});
+        extend(json, { type: 2 });
         console.log(json)
         return json
     }
@@ -78,10 +81,45 @@ class Emoji {
      * @returns {object} 
      */
     constructor(emoji) {
-        if(typeof emoji === 'object') {
-            if(!emoji.id) emoji.id = null;
+        if (typeof emoji === 'object') {
+            if (!emoji.id) emoji.id = null;
             return emoji;
-        }else return {id: null, name: emoji};
+        } else return { id: null, name: emoji };
+    }
+}
+
+function getSubcommands(command) {
+    const subCommands = readdirSync(join(__dirname, 'src', 'subCommands', command))
+        .map(subCommandFile => require(join(__dirname, 'src', 'subCommands', command, subCommandFile)))
+    return {subCommands}
+}
+
+class Text {
+    /**
+     * 
+     * @returns {string}
+     */
+    capitalize() {
+        if (typeof this.word === 'object') {
+            const newArray = []
+            for (let word of this.word) {
+            word = word.split('')
+            word[0] = word[0].toUpperCase()
+            word = word.join('')
+            newArray.push(word)
+            }
+            return newArray.join(' ')
+        }
+        this.word = this.word.split('')
+        this.word[0] = this.word[0].toUpperCase()
+        return this.word.join('')
+    }
+    /**
+     * 
+     * @param {string} word 
+     */
+    constructor(word) {
+        this.word = word
     }
 }
 
@@ -89,7 +127,9 @@ module.exports = {
     Emoji,
     Embed,
     Button,
+    Text,
     ButtonStyles,
     SRA_Fetch,
-    chunkArray
+    chunkArray,
+    getSubcommands
 }
