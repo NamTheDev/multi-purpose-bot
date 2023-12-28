@@ -1,13 +1,13 @@
 const { Command } = require("eris");
-const { chunkArray, SRA_Fetch, Embed, Button, ButtonStyles, Emoji } = require("../../../utils");
-
+const { chunkArray, SRA_Fetch } = require("../../../utils/functions");
+const { Embed, Button, ButtonStyles, Emoji } = require("../../../utils/structures");
 module.exports = new Command('lyrics',
-/**
- * 
- * @param {Message} message 
- * @param {string[]} args 
- */
-async function (message, args) {
+    /**
+     * 
+     * @param {Message} message 
+     * @param {string[]} args 
+     */
+    async function (message, args) {
         const { lyrics, title, author, thumbnail, links, disclaimer, error } = await SRA_Fetch('others', 'lyrics', [args.join(' ') ? `title=${args.join(' ')}` : ''])
         if (error) throw (error);
         const thumbnailUrl = thumbnail.genius
@@ -35,9 +35,9 @@ async function (message, args) {
                 new Button({ style: ButtonStyles.Primary, emoji: new Emoji('➡️'), custom_id: 'next_page' })
             ]
         })
-},
-{
-    description: 'Show lyrics',
-    usage: 'sra lyrics <title>'
-}
+    },
+    {
+        description: 'Show lyrics',
+        usage: 'sra lyrics <title>'
+    }
 )

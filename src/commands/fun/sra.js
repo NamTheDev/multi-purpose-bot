@@ -1,7 +1,8 @@
 const { Command, Message } = require("eris");
-const { getSubcommands, Embed } = require("../../../utils");
 const Color = require("color");
 const { client } = require("../..");
+const { getSubcommands } = require("../../../utils/functions");
+const { Embed } = require("../../../utils/structures");
 const { subCommands } = getSubcommands('sra')
 const command = new Command('some-random-api',
     /**

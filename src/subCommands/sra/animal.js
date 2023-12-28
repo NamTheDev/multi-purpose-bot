@@ -1,6 +1,7 @@
 const { Command, Message } = require("eris");
-const { Embed, SRA_Fetch, Text } = require("../../../utils");
 const { default: fetch } = require("node-fetch");
+const { Embed, Text } = require("../../../utils/structures");
+const { SRA_Fetch } = require("../../../utils/functions");
 module.exports = new Command('animal',
     /**
      * 
