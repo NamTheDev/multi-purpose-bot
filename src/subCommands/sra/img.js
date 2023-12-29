@@ -1,7 +1,8 @@
-const { Command, Message } = require("eris");
+const { Command, Message, Embed } = require("eris");
 const { default: fetch } = require("node-fetch");
-const { Embed, Text } = require("../../../utils/structures");
+const { Text } = require("../../../utils/structures");
 const { SRA_Fetch } = require("../../../utils/functions");
+const { client } = require("../..");
 module.exports = new Command('img',
     /**
      * 
@@ -9,9 +10,10 @@ module.exports = new Command('img',
      * @param {string[]} args 
      */
     async function (message, args) {
+        const prefix = getPrefix(client)
         const img = ['bird', 'cat', 'dog', 'fox', 'kangaroo', 'koala', 'panda', 'raccoon', 'red_panda', 'pikachu', 'whale', 'kangaroo']
         if (!img.includes(args[0]))
-            return await message.channel.createMessage(`# Available usage:\n${img.map((img, index) => `${index + 1}. \`\`\`@SKULL#5641 sra img ${img}\`\`\``).join('\n')}`)
+            return await message.channel.createMessage(`# Available usage:\n${img.map((img, index) => `${index + 1}. \`\`\`${prefix} sra img ${img}\`\`\``).join('\n')}`)
         let { link } = await SRA_Fetch('img', args[0])
         const title = new Text(args[0].replace('_', ' ').split(' ')).capitalize()
         if((await (await fetch(link)).text()).startsWith('<!DOCTYPE html>'))
@@ -25,6 +27,6 @@ module.exports = new Command('img',
             })
         })
     }, {
-    description: 'Show image / gif',
+    description: 'Show image / GIF',
     usage: 'sra img <name>'
 })

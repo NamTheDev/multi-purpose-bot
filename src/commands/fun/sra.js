@@ -1,8 +1,9 @@
 const { Command, Message } = require("eris");
 const Color = require("color");
-const { client } = require("../..");
-const { getSubcommands } = require("../../../utils/functions");
+const { getSubcommands, getPrefix } = require("../../../utils/functions");
 const { Embed } = require("../../../utils/structures");
+const { reply } = require("../../../utils/methods");
+const { client } = require("../..");
 const { subCommands } = getSubcommands('sra')
 const command = new Command('some-random-api',
     /**
@@ -11,6 +12,7 @@ const command = new Command('some-random-api',
      * @param {string[]} args 
      */
     async function (message, args) {
+        const prefix = getPrefix(client)
         const subCommand = subCommands.find(subCommand => subCommand.label === args[0])
         if (subCommand) {
             args.shift()
@@ -18,7 +20,7 @@ const command = new Command('some-random-api',
                 return await subCommand.executeCommand(message, args)
             } catch (e) {
                 if(`${e}`.toLowerCase().includes('typeerror')) console.log(e);
-                return await message.channel.createMessage({
+                return await reply(message, {
                     embed: new Embed({
                         title: 'Error:',
                         description: `\`\`\`${e}\`\`\``,
@@ -27,7 +29,7 @@ const command = new Command('some-random-api',
                 })
             }
         }
-        return await message.channel.createMessage({ content: `# Some random API command\n## Available subcommands:\n${subCommands.map((cmd, index) => `${index+1}. **${cmd.label}** - ${cmd.description}\n> \`\`\`@SKULL#5641 ${cmd.usage}\`\`\``).join('\n')}` })
+        return await reply(message, { content: `# Some random API command\n## Available subcommands:\n${subCommands.map((cmd, index) => `${index+1}. **${cmd.label}** - ${cmd.description}\n> \`\`\`${prefix} ${cmd.usage}\`\`\``).join('\n')}` })
     },
     {
         aliases: ['sra']

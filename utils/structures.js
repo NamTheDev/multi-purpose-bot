@@ -44,20 +44,24 @@ class Emoji {
     }
 }
 
+/**
+ * @enum {{
+* color: number, 
+* title: string, 
+* url: string, 
+* author: { name: string, icon_url: string, url: string }, 
+* description: string, 
+* thumbnail: { url: string }, 
+* fields: Array.<{name: string, value: string, inline: boolean}>, 
+* image: { url: string }, 
+* timestamp: Date, 
+* footer: { text: string, icon_url: string }}}
+*/
+const EmbedStructure = {}
 class Embed {
     /**
      * 
-     * @param {{
-     * color: number, 
-     * title: string, 
-     * url: string, 
-     * author: { name: string, icon_url: string, url: string }, 
-     * description: string, 
-     * thumbnail: { url: string }, 
-     * fields: Array.<{name: string, value: string, inline: boolean}>, 
-     * image: { url: string }, 
-     * timestamp: Date, 
-     * footer: { text: string, icon_url: string }}} json 
+     * @param {EmbedStructure} json 
      * @returns {object}
      */
     constructor(json) {
@@ -93,10 +97,18 @@ class Text {
         this.word = word
     }
 }
+
+/**
+ * @enum {name: string, buffer: Buffer}
+ */
+const fileStructure = {}
+
 module.exports = {
     Emoji,
     Embed,
     Button,
     Text,
-    ButtonStyles
+    ButtonStyles,
+    EmbedStructure,
+    fileStructure
 }

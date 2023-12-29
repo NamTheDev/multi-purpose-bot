@@ -5,12 +5,7 @@ require('dotenv')
 const client = new CommandClient(process.env.TOKEN, {
     intents: ['all']
 }, {
-    name: '# multi-purpose',
-    description: 'Help menu',
-    ignoreBots: true,
-    ignoreSelf: true,
-    defaultHelpCommand: true,
-    owner: '**nguyen.thien.nam**'
+    defaultHelpCommand: false
 })
 
 module.exports = { client }

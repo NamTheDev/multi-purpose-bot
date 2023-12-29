@@ -27,8 +27,11 @@ async function SRA_Fetch(category, endpoint, query) {
     return data
 }
 
+function getPrefix(client) { return `@${client.user.username}#${client.user.discriminator}` }
+
 module.exports = {
     SRA_Fetch,
     chunkArray,
-    getSubcommands
+    getSubcommands,
+    getPrefix
 }
