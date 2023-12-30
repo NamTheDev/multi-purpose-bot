@@ -1,6 +1,7 @@
 const { Command, Message } = require("eris");
-const { chunkArray, SRA_Fetch } = require("../../../utils/functions");
+const { chunkArray, SRA_Fetch, getPrefix } = require("../../../utils/functions");
 const { Embed, Button, ButtonStyles, Emoji } = require("../../../utils/structures");
+
 module.exports = new Command('lyrics',
     /**
      * 

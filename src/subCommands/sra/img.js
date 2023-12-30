@@ -1,8 +1,9 @@
 const { Command, Message, Embed } = require("eris");
 const { default: fetch } = require("node-fetch");
 const { Text } = require("../../../utils/structures");
-const { SRA_Fetch } = require("../../../utils/functions");
+const { SRA_Fetch, getPrefix } = require("../../../utils/functions");
 const { client } = require("../..");
+
 module.exports = new Command('img',
     /**
      * 

@@ -1,5 +1,6 @@
 const { Command, Message } = require("eris");
 const { client } = require("../..");
+const { getPrefix } = require("../../../utils/functions");
 
 module.exports = new Command('animu',
     /**
