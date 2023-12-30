@@ -18,7 +18,7 @@ module.exports = new Command('animal',
         return await message.channel.createMessage({
             embed: new Embed({
                 title,
-                description: `**Fact**: ${fact}`,
+                description: `**Fact**: \`\`\`${fact}\`\`\``,
                 image: {
                     url: image
                 },

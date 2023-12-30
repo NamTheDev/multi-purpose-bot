@@ -1,6 +1,7 @@
 const { Command, Message } = require("eris");
 const { chunkArray, SRA_Fetch, getPrefix } = require("../../../utils/functions");
 const { Embed, Button, ButtonStyles, Emoji } = require("../../../utils/structures");
+const { reply } = require("../../../utils/methods");
 
 module.exports = new Command('lyrics',
     /**
@@ -27,18 +28,14 @@ module.exports = new Command('lyrics',
         for (const lyricsArray of chunkedArray) {
             embeds.push(new Embed({ description: `${lyricsArray.join('\n')}` }))
         }
-        await message.channel.createMessage({
+        await reply(message, {
             embeds: [
                 defaultEmbed,
                 embeds[0]
-            ],
-            components: [
-                new Button({ style: ButtonStyles.Primary, emoji: new Emoji('➡️'), custom_id: 'next_page' })
             ]
         })
     },
     {
         description: 'Show lyrics',
         usage: 'sra lyrics <title>'
-    }
-)
+    })
