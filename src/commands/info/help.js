@@ -13,7 +13,9 @@ module.exports = new Command('help',
      */
     async function (message, args) {
         const prefix = getPrefix(client)
-        return reply(message, readFileSync('md/help_menu.md', 'utf-8').replace('${prefix}', prefix))
+        return reply(message, readFileSync('md/help_menu.md', 'utf-8')
+            .replace('${prefix}', prefix)
+            .replace('${helpSlashCommand}', `not yet`))
     },
     {
         description: 'Send help menu'

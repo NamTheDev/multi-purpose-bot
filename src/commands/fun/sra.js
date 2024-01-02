@@ -32,10 +32,12 @@ const command = new Command('some-random-api',
         return await reply(message, { content: `# Some random API command\n## Available subcommands:\n${subCommands.map((cmd, index) => `${index+1}. **${cmd.label}** - ${cmd.description}\n> \`\`\`${prefix} ${cmd.usage}\`\`\``).join('\n')}` })
     },
     {
-        aliases: ['sra']
+        aliases: ['sra'],
+        description: 'Generating data from some-random-api'
     }
 )
 for (const subCommand of subCommands) {
+    subCommand.parentCommand = command
     command.registerSubcommand(subCommand.label, subCommand.execute, subCommand)
 }
 module.exports = command
