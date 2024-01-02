@@ -4,7 +4,7 @@
 let ButtonStyles = { Primary: 1, Secondary: 2, Success: 3, Danger: 4, Link: 5 };
 
 /**
- * @enum {name: string, buffer: Buffer}
+ * @enum {{name: string, buffer: Buffer}}
  */
 let fileStructure;
 
@@ -157,24 +157,6 @@ class Emoji {
     }
 }
 
-<<<<<<< HEAD
-=======
-/**
- * @enum {{
-* title: string, 
-* url: string, 
-* author: { name: string, icon_url: string, url: string }, 
-* color: number, 
-* description: string, 
-* thumbnail: { url: string }, 
-* fields: Array.<{name: string, value: string, inline: boolean}>, 
-* image: { url: string }, 
-* timestamp: Date, 
-* footer: { text: string, icon_url: string }}}
-*/
-const EmbedStructure = {}
-
->>>>>>> c0660cf19222c0ca493bbebf26f1951df7ddcfc5
 class Embed {
     /**
      * 
@@ -316,8 +298,6 @@ class Text {
         this.word = word
     }
 }
-
-<<<<<<< HEAD
 class applicationCommand {
     /**
      * 
@@ -334,12 +314,6 @@ class applicationCommand {
         return json
     }
 }
-=======
-/**
- * @enum {{name: string, buffer: Buffer}}
- */
-const fileStructure = {}
->>>>>>> c0660cf19222c0ca493bbebf26f1951df7ddcfc5
 
 module.exports = {
     Emoji,
