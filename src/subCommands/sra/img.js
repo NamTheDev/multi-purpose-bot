@@ -1,8 +1,13 @@
 const { Command, Message } = require("eris");
 const { default: fetch } = require("node-fetch");
 const { Text, Embed } = require("../../../utils/structures");
+<<<<<<< HEAD
 const { SRA_Fetch } = require("../../../utils/functions");
+=======
+const { SRA_Fetch, getPrefix } = require("../../../utils/functions");
+>>>>>>> c0660cf19222c0ca493bbebf26f1951df7ddcfc5
 const { client } = require("../..");
+
 module.exports = new Command('img',
     /**
      * 
@@ -16,8 +21,8 @@ module.exports = new Command('img',
             return await message.channel.createMessage(`# Available usage:\n${img.map((img, index) => `${index + 1}. \`\`\`${prefix} sra img ${img}\`\`\``).join('\n')}`)
         let { link } = await SRA_Fetch('img', args[0])
         const title = new Text(args[0].replace('_', ' ').split(' ')).capitalize()
-        if((await (await fetch(link)).text()).startsWith('<!DOCTYPE html>'))
-        throw 'Image / GIF not available.';
+        if ((await (await fetch(link)).text()).startsWith('<!DOCTYPE html>'))
+            throw 'Image / GIF not available.';
         return await message.channel.createMessage({
             embed: new Embed({
                 title,

@@ -1,6 +1,6 @@
 const { Command, Message } = require("eris");
 const { Embed, Text } = require("../../../utils/structures");
-const { SRA_Fetch } = require("../../../utils/functions");
+const { SRA_Fetch, getPrefix } = require("../../../utils/functions");
 const { client } = require("../..");
 module.exports = new Command('animal',
     /**
@@ -18,7 +18,7 @@ module.exports = new Command('animal',
         return await message.channel.createMessage({
             embed: new Embed({
                 title,
-                description: `**Fact**: ${fact}`,
+                description: `**Fact**: \`\`\`${fact}\`\`\``,
                 image: {
                     url: image
                 },
