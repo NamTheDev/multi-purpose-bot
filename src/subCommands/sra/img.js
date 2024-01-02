@@ -12,11 +12,12 @@ module.exports = new Command('img',
      */
     async function (message, args) {
         const prefix = getPrefix(client)
-        const img = ['bird', 'cat', 'dog', 'fox', 'kangaroo', 'koala', 'panda', 'raccoon', 'red_panda', 'pikachu', 'whale', 'kangaroo']
+        const imgs = ['bird', 'cat', 'dog', 'fox', 'kangaroo', 'koala', 'panda', 'raccoon', 'red_panda', 'pikachu', 'whale', 'kangaroo', 'random']
         if (!img.includes(args[0]))
             return await message.channel.createMessage(`# Available usage:\n${img.map((img, index) => `${index + 1}. \`\`\`${prefix} sra img ${img}\`\`\``).join('\n')}`)
-        let { link } = await SRA_Fetch('img', args[0])
-        const title = new Text(args[0].replace('_', ' ').split(' ')).capitalize()
+        const img = args[0] === 'random' ? imgs[await randomNumber(imgs.length - 1)] : args[0];
+        let { link } = await SRA_Fetch('img', img)
+        const title = new Text(img.replace('_', ' ').split(' ')).capitalize()
         if ((await (await fetch(link)).text()).startsWith('<!DOCTYPE html>'))
             throw 'Image / GIF not available.';
         return await message.channel.createMessage({

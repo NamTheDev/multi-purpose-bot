@@ -3,7 +3,7 @@ const { client } = require("../src")
 const { EmbedStructure, fileStructure } = require("./structures")
 /**
  * @param {Message} message 
- * @param {string | {content: string, embed: EmbedStructure, embeds: Array.<EmbedStructure>, actionRows: Array.<import("eris").ActionRow>}} content 
+ * @param {string | {content: string, embed: EmbedStructure, embeds: Array.<EmbedStructure>, components: Array.<import("eris").ActionRow>}} content 
  * @param {boolean} message_reference 
  * @param {fileStructure | Array.<fileStructure>} file
  */

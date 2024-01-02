@@ -4,6 +4,11 @@
 let ButtonStyles = { Primary: 1, Secondary: 2, Success: 3, Danger: 4, Link: 5 };
 
 /**
+ * @enum {{ id: string, name: string }}
+ */
+let EmojiStructure;
+
+/**
  * @enum {{name: string, buffer: Buffer}}
  */
 let fileStructure;
@@ -110,7 +115,8 @@ let ApplicationCommandOptionStructure;
  * options?: Array.<ApplicationCommandOptionStructure>,
  * default_member_permissions: ?string,
  * dm_permission: boolean,
- * nsfw: boolean
+ * nsfw: boolean,
+ * execute: function(import("eris").CommandInteraction, string[])
  * }} 
  */
 let applicationCommandStructure;
@@ -119,14 +125,47 @@ let applicationCommandStructure;
  * @enum {{
  * style: ButtonStyles,
  * label: string,
- * emoji: string,
+ * emoji?: EmojiStructure,
  * custom_id: string,
- * url: string,
- * disabled: boolean,
- * execute: function(import("eris").CommandInteraction, string[])
+ * url?: string,
+ * disabled?: boolean,
  * }}
  */
 let ButtonStructure;
+
+/**
+ * @enum {{
+ * label: string,
+ * value: string,
+ * description?: string,
+ * emoji?: EmojiStructure,
+ * default?: boolean
+ * }}
+ */
+let SelectOptionStructure;
+
+/**
+ * @enum {{
+ * id: string,
+ * type: 'user' | 'role' | 'channel'
+ * }}
+ */
+let SelectDefaultValueStructure;
+
+/**
+ * @enum {{
+ * type: number,
+ * custom_id: string,
+ * options: Array.<SelectOptionStructure>,
+ * channel_types?: Array.<ChannelTypes>,
+ * placeholder?: string,
+ * default_values?: Array.<SelectDefaultValueStructure>,
+ * min_values?: number,
+ * max_values?: number,
+ * disabled?: boolean
+ * }}
+ */
+let SelectMenuStructure;
 
 class Button {
     type = ComponentTypes['Button']
@@ -135,7 +174,7 @@ class Button {
      * @returns {object}
      */
     constructor(json) {
-        json.style = ButtonStyles[json.style]
+        json.style = ButtonStyles[json.style] || json.style
         json.type = this.type
         return json
     }
@@ -143,10 +182,7 @@ class Button {
 
 class Emoji {
     /**
-     * @param {string | {
-     * id: string,
-     * name: string
-     * }} emoji 
+     * @param {string | EmojiStructure} emoji 
      * @returns {object} 
      */
     constructor(emoji) {
@@ -315,12 +351,39 @@ class applicationCommand {
     }
 }
 
+class ActionRow {
+    type = ComponentTypes['ActionRow']
+    components = []
+    /**
+     * 
+     * @param {ButtonStructure | SelectMenuStructure} component 
+     * @returns 
+     */
+    addComponent(component) {
+        this.components.push(component)
+        return this
+    }
+    /**
+     * 
+     * @param  {Array.<ButtonStructure> | Array.<SelectMenuStructure>} components 
+     */
+    constructor(...components) {
+        for (const component of components) {
+            this.components.push(component)
+        }
+    }
+}
 module.exports = {
     Emoji,
     Embed,
     Button,
     Text,
     applicationCommand,
+    ActionRow,
+    SelectDefaultValueStructure,
+    SelectMenuStructure,
+    SelectOptionStructure,
+    EmojiStructure,
     applicationCommandOptionTypes,
     applicationCommandTypes,
     applicationCommandStructure,

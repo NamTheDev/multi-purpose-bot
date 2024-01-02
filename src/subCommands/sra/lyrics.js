@@ -1,7 +1,10 @@
-const { Command, Message } = require("eris");
+const { Command, Message, ComponentInteraction } = require("eris");
 const { chunkArray, SRA_Fetch, getPrefix } = require("../../../utils/functions");
-const { Embed, Button, ButtonStyles, Emoji } = require("../../../utils/structures");
+const { Embed, Button, ButtonStyles, Emoji, ActionRow } = require("../../../utils/structures");
 const { reply } = require("../../../utils/methods");
+const { InteractionCollector } = require("../../../utils/collectors");
+const ms = require("ms");
+const { client } = require("../..");
 
 module.exports = new Command('lyrics',
     /**
@@ -25,6 +28,19 @@ module.exports = new Command('lyrics',
             }
         })
         const embeds = []
+        const row = new ActionRow(
+            new Button({
+                emoji: new Emoji('⬅'),
+                custom_id: 'previous_page',
+                style: ButtonStyles['Primary'],
+                disabled: true
+            }),
+            new Button({
+                emoji: new Emoji('➡'),
+                style: ButtonStyles['Primary'],
+                custom_id: 'next_page'
+            })
+        )
         for (const lyricsArray of chunkedArray) {
             embeds.push(new Embed({ description: `${lyricsArray.join('\n')}` }))
         }
@@ -32,7 +48,8 @@ module.exports = new Command('lyrics',
             embeds: [
                 defaultEmbed,
                 embeds[0]
-            ]
+            ],
+            components: [row]
         })
     },
     {

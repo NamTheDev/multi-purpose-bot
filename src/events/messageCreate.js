@@ -2,6 +2,8 @@ const { client } = require("..")
 const { getPrefix } = require("../../utils/functions")
 const { reply } = require("../../utils/methods")
 client.on('messageCreate', async (message) => {
+    console.log(client._events)
+    if(client._events.messageCollect) return await client._events.messageCollect(message);
     if(!message.guildID) {
         try{
         message.channel = await message.author.getDMChannel()
