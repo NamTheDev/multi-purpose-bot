@@ -350,9 +350,11 @@ class applicationCommand {
         return json
     }
 }
-
 class ActionRow {
     type = ComponentTypes['ActionRow']
+    /**
+     * @type {Array.<ButtonStructure>}
+     */
     components = []
     /**
      * 

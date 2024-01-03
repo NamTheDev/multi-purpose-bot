@@ -19,12 +19,23 @@ module.exports = new Command('scramble',
                 content: `# Scrambled word game! Guess the word:\n\`\`\`${scrambled}\`\`\`\n> You only have **${time} seconds** left so quick!`
             }
         )
-        const collector = new MessageCollector(client, {
-            channel: message.channel,
-            filter: (msg) => msg.author.id === message.author.id,
+        const collector = new MessageCollector({
+            message,
             time: ms(`${time} seconds`)
         })
         await message.channel.sendTyping()
+        collector.onCollect(
+            /**
+             * 
+             * @param {Message} msg 
+             */
+            async (msg) => {
+                if (msg.content === original) {
+                    collector.stop('v')
+                } else {
+                    collector.stop('x')
+                }
+            })
         collector.onEnd(
             async (reason) => {
                 if (['v', 'x'].includes(reason)) {
@@ -36,18 +47,6 @@ module.exports = new Command('scramble',
                     }
                 } else {
                     return message.channel.createMessage(`# Out of time.\n> The word is: **${original}**`)
-                }
-            })
-        collector.onCollect(
-            /**
-             * 
-             * @param {Message} msg 
-             */
-            async (msg) => {
-                if (msg.content === original) {
-                    collector.stop('v')
-                } else {
-                    collector.stop('x')
                 }
             })
     }, { description: 'Guess the scrambled word', fullDescription: 'A game for guessing scrambled word.\n> **Words are generated using this API**: https://random-word-api.vercel.app.' })

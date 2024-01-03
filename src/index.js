@@ -12,7 +12,9 @@ const client = new CommandClient(process.env.TOKEN, {
 })
 
 const data = require('./data.json')
-module.exports = { client, data }
+const messageCollection = new Map()
+const interactionCollection = new Map()
+module.exports = { client, data, messageCollection, interactionCollection }
 
 const categories = readdirSync(`${__dirname}/commands`)
 for (const category of categories) {

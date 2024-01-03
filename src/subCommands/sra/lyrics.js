@@ -1,6 +1,6 @@
-const { Command, Message, ComponentInteraction } = require("eris");
+const { Command, Message } = require("eris");
 const { chunkArray, SRA_Fetch, getPrefix } = require("../../../utils/functions");
-const { Embed, Button, ButtonStyles, Emoji, ActionRow } = require("../../../utils/structures");
+const { Embed, Button, ButtonStyles, Emoji, ActionRow, ComponentTypes } = require("../../../utils/structures");
 const { reply } = require("../../../utils/methods");
 const { InteractionCollector } = require("../../../utils/collectors");
 const ms = require("ms");
@@ -44,12 +44,43 @@ module.exports = new Command('lyrics',
         for (const lyricsArray of chunkedArray) {
             embeds.push(new Embed({ description: `${lyricsArray.join('\n')}` }))
         }
-        await reply(message, {
+        let pageIndex = 0;
+        const msg = await reply(message, {
             embeds: [
                 defaultEmbed,
-                embeds[0]
+                embeds[pageIndex]
             ],
             components: [row]
+        })
+        const collect = new InteractionCollector({
+            message,
+            filter: (interaction) => interaction.user.id === message.author.id
+        })
+        async function switchPage(index, interaction, row) {
+            if (index !== (embeds.length - 1) || index !== 0) row.components[0].disabled = false, row.components[1].disabled = false;
+            if (index === 0) row.components[0].disabled = true;
+            if (index === (embeds.length - 1)) row.components[1].disabled = true;
+            await msg.edit({
+                embeds: [
+                    defaultEmbed,
+                    embeds[index]
+                ],
+                components: [row]
+            })
+            console.log(index)
+            await interaction.deferUpdate()
+        }
+        collect.onCollect(async (interaction) => {
+            if (interaction.data.component_type === ComponentTypes['Button']) {
+                const { custom_id } = interaction.data
+                if (custom_id === 'next_page') {
+                    pageIndex += 1
+                    await switchPage(pageIndex, interaction, row)
+                } else if (custom_id === 'previous_page') {
+                    pageIndex -= 1
+                    await switchPage(pageIndex, interaction, row)
+                }
+            }
         })
     },
     {

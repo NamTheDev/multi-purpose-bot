@@ -1,10 +1,18 @@
-const { client } = require("..")
+const { client, messageCollection } = require("..")
 const { getPrefix } = require("../../utils/functions")
-const { reply } = require("../../utils/methods")
+const { reply } = require("../../utils/methods");
+const { ChannelTypes } = require("../../utils/structures");
 client.on('messageCreate', async (message) => {
-    console.log(client._events)
-    if(client._events.messageCollect) return await client._events.messageCollect(message);
-    if(!message.guildID) {
+    if(message.author.bot) return;
+    const collect = messageCollection.get('collect' + message.author.id + message.channel.id)
+    if(collect && message.channel.type === ChannelTypes['GuildText']) {
+        const filter = messageCollection.get('filter' + message.author.id + message.channel.id)
+        if(typeof filter === 'function') {
+            if(!filter(message)) return;
+        }
+        await collect(message)
+    }
+    if(message.channel.type === ChannelTypes['DM']) {
         try{
         message.channel = await message.author.getDMChannel()
         return await reply(message, '# Hello there!\nAre you trying to use the bot in DM? If yes, please type `/` for slash commands.\n> **NOTICE:** Bot commands are NOT available in DM.')
