@@ -1,5 +1,7 @@
 const { CommandClient } = require('eris')
 const { readdirSync } = require('fs')
+const { join } = require('path')
+const data = require('./data.json')
 require('dotenv')
     .config()
 const client = new CommandClient(process.env.TOKEN, {
@@ -10,29 +12,12 @@ const client = new CommandClient(process.env.TOKEN, {
         guildOnly: true
     }
 })
-
-const data = require('./data.json')
 const messageCollection = new Map()
 const interactionCollection = new Map()
-module.exports = { client, data, messageCollection, interactionCollection }
+module.exports = { client, data, messageCollection, interactionCollection, baseDirname: __dirname }
 
-const categories = readdirSync(`${__dirname}/commands`)
-for (const category of categories) {
-    for (const commandFile of readdirSync(`${__dirname}/commands/${category}`)) {
-        const commandData = require(`${__dirname}/commands/${category}/${commandFile}`)
-        const defaultCommandOptionKeys = Object.entries(client.commandOptions.defaultCommandOptions)
-        for (const defaultOption of defaultCommandOptionKeys) {
-            const key = defaultOption[0]
-            const value = defaultOption[1]
-            commandData[key] = value
-        }
-        client.registerCommand(commandData.label, commandData.execute, commandData)
-    }
+const handlers = readdirSync(join(__dirname, 'handlers'))
+for ( const handlerFile of handlers) {
+    require(join(__dirname, 'handlers', handlerFile))
 }
-
-const events = readdirSync(`${__dirname}/events`)
-for (const eventFile of events) {
-    require(`${__dirname}/events/${eventFile}`)
-}
-
 client.connect();

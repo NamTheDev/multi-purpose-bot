@@ -1,8 +1,8 @@
-const { Message } = require("eris");
+const { Message, CommandInteraction } = require("eris");
 const { client } = require("../src")
 const { EmbedStructure, fileStructure } = require("./structures")
 /**
- * @param {Message} message 
+ * @param {Message | CommandInteraction} message 
  * @param {string | {content: string, embed: EmbedStructure, embeds: Array.<EmbedStructure>, components: Array.<import("eris").ActionRow>}} content 
  * @param {boolean} message_reference 
  * @param {fileStructure | Array.<fileStructure>} file
