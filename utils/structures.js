@@ -2,17 +2,14 @@
  * @enum {'Primary' | 'Secondary' | 'Success' | 'Danger' | 'Link'}
  */
 let ButtonStyles = { Primary: 1, Secondary: 2, Success: 3, Danger: 4, Link: 5 };
-
 /**
  * @enum {{ id: string, name: string }}
  */
 let EmojiStructure;
-
 /**
  * @enum {{name: string, buffer: Buffer}}
  */
 let fileStructure;
-
 /**
  * @enum {{
 * color: number, 
@@ -28,12 +25,10 @@ let fileStructure;
 * }}
 */
 let EmbedStructure;
-
 /**
  * @enum {'ChatInput' | 'User' | 'Message'}
  */
 let applicationCommandTypes = { ChatInput: 1, User: 2, Message: 3 };
-
 /**
  * @enum {'ActionRow' | 'Button' | 'StringSelect' | 'TextInput' | 'UserSelect' | 'RoleSelect' | 'MentionableSelect' | 'ChannelSelect'}
  */
@@ -47,7 +42,6 @@ let ComponentTypes = {
     MentionableSelect: 7,
     ChannelSelect: 8
 }
-
 /**
  * @enum {'SubCommand' | 'SubCommandGroup' | 'String' | 'Interger' | 'Boolean' | 'User' | 'Channel' | 'Role' | 'Mentionable' | 'Number' | 'Attachment'}
  */
@@ -64,7 +58,6 @@ let applicationCommandOptionTypes = {
     Number: 10,
     Attachment: 11
 }
-
 /**
  * @enum {'GuildText' | 'DM' | 'GuildVoice' | 'GroupDM' | 'GuildCategory' | 'GuildAnnouncement' | 'AnnouncementThread' | 'PublicThread' | 'PrivateThread' | 'GuildStageVoice' | 'GuildDirectory' | 'GuildForum' | 'GuildMedia'}
  */
@@ -83,7 +76,6 @@ let ChannelTypes = {
     GuildForum: 11,
     GuildMedia: 12
 }
-
 /**
  * @enum {{
  * type: number | applicationCommandOptionTypes,
@@ -103,7 +95,6 @@ let ChannelTypes = {
  * }}
  */
 let ApplicationCommandOptionStructure;
-
 /**
  * @enum {{ 
  * type: number | applicationCommandTypes
@@ -120,7 +111,6 @@ let ApplicationCommandOptionStructure;
  * }} 
  */
 let applicationCommandStructure;
-
 /**
  * @enum {{
  * style: ButtonStyles,
@@ -132,7 +122,6 @@ let applicationCommandStructure;
  * }}
  */
 let ButtonStructure;
-
 /**
  * @enum {{
  * label: string,
@@ -143,7 +132,6 @@ let ButtonStructure;
  * }}
  */
 let SelectOptionStructure;
-
 /**
  * @enum {{
  * id: string,
@@ -151,7 +139,6 @@ let SelectOptionStructure;
  * }}
  */
 let SelectDefaultValueStructure;
-
 /**
  * @enum {{
  * type: number,
@@ -166,7 +153,6 @@ let SelectDefaultValueStructure;
  * }}
  */
 let SelectMenuStructure;
-
 class Button {
     type = ComponentTypes['Button']
     /**
@@ -179,7 +165,6 @@ class Button {
         return json
     }
 }
-
 class Emoji {
     /**
      * @param {string | EmojiStructure} emoji 
@@ -192,7 +177,6 @@ class Emoji {
         } else return { id: null, name: emoji };
     }
 }
-
 class Embed {
     /**
      * 
@@ -305,7 +289,6 @@ class Embed {
         }
     }
 }
-
 class Text {
     /**
      * 
