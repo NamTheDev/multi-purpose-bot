@@ -11,8 +11,7 @@ module.exports = new Command('img',
      * @param {Message} message 
      * @param {string[]} args 
      */
-    async function (message, args) {
-        const prefix = message.prefix
+    async function (message, args, prefix) {
         const imgs = ['bird', 'cat', 'dog', 'fox', 'kangaroo', 'koala', 'panda', 'raccoon', 'red_panda', 'pikachu', 'whale', 'kangaroo', 'random']
         if (!img.includes(args[0]))
             return await reply(message, `# Available usage:\n${img.map((img, index) => `${index + 1}. \`\`\`${prefix} sra img ${img}\`\`\``).join('\n')}`)

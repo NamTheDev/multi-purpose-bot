@@ -11,8 +11,7 @@ module.exports = new Command('animu',
      * @param {Message} message 
      * @param {string[]} args 
      */
-    async function (message, args) {
-        const prefix = message.prefix
+    async function (message, args, prefix) {
         const animu = ['face-palm', 'hug', 'pat', 'quote', 'wink', 'random']
         if (!animu.includes(args[0]))
             return await reply(message, `# Available usage:\n${animu.map((animu, index) => `${index + 1}. \`\`\`${prefix} sra animu ${animu}\`\`\``).join('\n')}`)

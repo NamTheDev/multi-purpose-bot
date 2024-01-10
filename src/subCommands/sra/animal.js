@@ -1,7 +1,6 @@
 const { Command, Message } = require("eris");
 const { Embed, Text } = require("../../../utils/structures");
 const { SRA_Fetch } = require("../../../utils/functions");
-const { client } = require("../..");
 const { randomNumber } = require("multi-purpose");
 const { reply } = require("../../../utils/methods");
 module.exports = new Command('animal',
@@ -10,8 +9,7 @@ module.exports = new Command('animal',
      * @param {Message} message 
      * @param {string[]} args 
      */
-    async function (message, args) {
-        const prefix = message.prefix
+    async function (message, args, prefix) {
         const animals = ['bird', 'cat', 'dog', 'fox', 'kangaroo', 'koala', 'panda', 'raccoon', 'red_panda', 'random']
         if (!animals.includes(args[0]))
             return await reply(message, `# Available usage:\n${animals.map((animal, index) => `${index + 1}. \`\`\`${prefix} sra animal ${animal}\`\`\``).join('\n')}`)

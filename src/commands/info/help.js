@@ -5,6 +5,7 @@ const { readFileSync, readdirSync } = require("fs");
 const { SelectMenu, ActionRow, Text } = require("../../../utils/structures");
 const { join } = require("path");
 const { InteractionCollector } = require("../../../utils/collectors");
+const { getPrefix } = require("../../../utils/functions");
 
 module.exports = new Command('help',
     /**
@@ -15,13 +16,16 @@ module.exports = new Command('help',
      */
     async function (message, args) {
         const commands = await client.getCommands()
-        const prefix = message.prefix
+        const prefix = await getPrefix(client)
         const helpSlashCommand = commands.find(command => command.name === 'help')
         const pingSlashCommand = commands.find(command => command.name === 'ping')
+        const toReplaceItems = { prefix, helpSlashCommand, pingSlashCommand }
         const helpMenuMarkdown = readFileSync(join(process.cwd(), 'md', 'help_menu.md'), 'utf-8')
         const helpMenuPages = readdirSync(join(process.cwd(), 'md', 'help_menu_pages')).map(fileName => fileName.split(".")[0])
         await reply(message, {
-            content: helpMenuMarkdown.replace('{authorName}', message.author.username),
+            content: helpMenuMarkdown
+                .replace('{authorName}', message.author.username)
+                .split('{prefix}').join(prefix),
             components: [
                 new ActionRow(
                     new SelectMenu({
@@ -32,16 +36,21 @@ module.exports = new Command('help',
                                 label: new Text(pageName.split('_').join(" ")).capitalize(),
                                 value: index
                             }
-                        })
+                        }),
+                        placeholder: 'Select a page'
                     })
                 )
             ]
         })
         const collector = new InteractionCollector({ message })
         collector.onCollect(async (interaction) => {
-            const page = readFileSync(join(process.cwd(), 'md', 'help_menu_pages', helpMenuPages[interaction.data.values[0]])+'.md', 'utf-8')
-            const matches = str.match(/\{(.*?)\}/g);
-            await interaction.defer(64)
+            if (!interaction.acknowledged) await interaction.defer(64);
+            let page = readFileSync(join(process.cwd(), 'md', 'help_menu_pages', helpMenuPages[interaction.data.values[0]]) + '.md', 'utf-8')
+            const matches = page.match(/\{(.*?)\}/g);
+            if (!matches) return await reply(interaction, page)
+            for (const match of matches) {
+                page = page.split(match).join(toReplaceItems[match.substring(1, match.length - 1)])
+            }
             return await reply(interaction, page)
         })
     },
