@@ -1,5 +1,6 @@
 const { Message, Command } = require("eris");
 const { client } = require("../..");
+const { reply } = require("../../../utils/methods");
 
 module.exports = new Command('ping',
     /**
@@ -9,7 +10,7 @@ module.exports = new Command('ping',
      * @returns 
      */
     async function (message, args) {
-        return message.channel.createMessage(`# Pong! 🏓\n\`\`\`${Date.now() - message.timestamp}ms\`\`\``)
+        return await reply(message, `# Pong! 🏓\n\`\`\`${Date.now() - message.timestamp}ms\`\`\``)
     },
     {
         description: 'Ping pong command'

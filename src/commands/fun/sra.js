@@ -1,6 +1,6 @@
 const { Command, Message } = require("eris");
 const Color = require("color");
-const { getSubcommands, getPrefix } = require("../../../utils/functions");
+const { getSubcommands } = require("../../../utils/functions");
 const { Embed } = require("../../../utils/structures");
 const { reply } = require("../../../utils/methods");
 const { client } = require("../..");
@@ -12,7 +12,7 @@ const command = new Command('some-random-api',
      * @param {string[]} args 
      */
     async function (message, args) {
-        const prefix = getPrefix(client)
+        const prefix = message.prefix
         const subCommand = subCommands.find(subCommand => subCommand.label === args[0])
         if (subCommand) {
             args.shift()

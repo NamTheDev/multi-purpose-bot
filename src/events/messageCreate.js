@@ -1,5 +1,4 @@
 const { client, messageCollection } = require("..")
-const { getPrefix } = require("../../utils/functions")
 const { reply } = require("../../utils/methods");
 const { ChannelTypes } = require("../../utils/structures");
 client.on('messageCreate', async (message) => {
@@ -20,7 +19,7 @@ client.on('messageCreate', async (message) => {
             return;
         }
     }
-    const prefix = getPrefix(client)
+    const prefix = message.prefix
     const botMention = message.mentions.find(user => user.id === client.user.id)
     const onlyMention = message.content.split(' ').length > 1 ? false : true
     if (botMention && onlyMention) {

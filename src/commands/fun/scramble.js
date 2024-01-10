@@ -2,7 +2,7 @@ const { Message, Command } = require("eris");
 const { MessageCollector } = require('../../../utils/collectors')
 const ms = require("ms");
 const { getScrambledWordQuestions } = require("multi-purpose");
-const { client } = require("../..");
+const { reply } = require("../../../utils/methods");
 
 module.exports = new Command('scramble',
     /**
@@ -14,7 +14,7 @@ module.exports = new Command('scramble',
         const scramble = await getScrambledWordQuestions({ words: 10 })
         const { original, scrambled } = scramble[Math.floor(scramble.length * Math.random())]
         const time = '10'
-        await message.channel.createMessage(
+        await reply(message,
             {
                 content: `# Scrambled word game! Guess the word:\n\`\`\`${scrambled}\`\`\`\n> You only have **${time} seconds** left so quick!`
             }

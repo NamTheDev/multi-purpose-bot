@@ -1,8 +1,9 @@
 const { Command, Message } = require("eris");
 const { client } = require("../..");
-const { getPrefix, SRA_Fetch } = require("../../../utils/functions");
-const { Text, Embed } = require("../../../utils/structures");
+const { SRA_Fetch } = require("../../../utils/functions");
+const { Embed } = require("../../../utils/structures");
 const { default: fetch } = require("node-fetch");
+const { reply } = require("../../../utils/methods");
 
 module.exports = new Command('animu',
     /**
@@ -11,10 +12,10 @@ module.exports = new Command('animu',
      * @param {string[]} args 
      */
     async function (message, args) {
-        const prefix = getPrefix(client)
+        const prefix = message.prefix
         const animu = ['face-palm', 'hug', 'pat', 'quote', 'wink', 'random']
         if (!animu.includes(args[0]))
-            return await message.channel.createMessage(`# Available usage:\n${animu.map((animu, index) => `${index + 1}. \`\`\`${prefix} sra animu ${animu}\`\`\``).join('\n')}`)
+            return await reply(message, `# Available usage:\n${animu.map((animu, index) => `${index + 1}. \`\`\`${prefix} sra animu ${animu}\`\`\``).join('\n')}`)
         const animuAction = args[0] === 'random' ? animu[await randomNumber(animu.length - 1)] : args[0];
         const animuData = await SRA_Fetch('animu', animuAction)
         if (animuAction !== 'quote' && (await (await fetch(animuData.link)).text()).startsWith('<!DOCTYPE html>'))
@@ -25,7 +26,7 @@ module.exports = new Command('animu',
             embed.setTitle(`animu ${animuAction}`)
             embed.setDescription(`"*${sentence}*"\n\n> **Quote by**:\`\`\`${character}\`\`\`\n> **From anime**:\`\`\`${anime}\`\`\``)
         }
-        return await message.channel.createMessage({ embed })
+        return await reply(message, { embed })
     }, {
     aliases: ['anime'],
     description: 'Send anime quote or GIF',

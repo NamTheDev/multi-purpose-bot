@@ -140,8 +140,18 @@ let SelectOptionStructure;
  */
 let SelectDefaultValueStructure;
 /**
+ * @enum {'Text' | 'User' | 'Role' | 'Mentionable' | 'Channels'}
+ */
+let SelectMenuTypes = {
+    Text: 3,
+    User: 5,
+    Role: 6,
+    Mentionable: 7,
+    Channels: 8,
+}
+/**
  * @enum {{
- * type: number,
+ * type: SelectMenuTypes,
  * custom_id: string,
  * options: Array.<SelectOptionStructure>,
  * channel_types?: Array.<ChannelTypes>,
@@ -153,6 +163,8 @@ let SelectDefaultValueStructure;
  * }}
  */
 let SelectMenuStructure;
+
+
 class Button {
     type = ComponentTypes['Button']
     /**
@@ -164,6 +176,17 @@ class Button {
         json.type = this.type
         return json
     }
+}
+class SelectMenu {
+    /**
+     * @param {SelectMenuStructure} json
+     * @returns
+     */
+    constructor(json) {
+        json.type = SelectMenuTypes[json.type]
+        return json
+    }
+
 }
 class Emoji {
     /**
@@ -324,11 +347,13 @@ class applicationCommand {
      * @returns 
      */
     constructor(json) {
-        json.options = json.options.map(option => {
-            option.type = applicationCommandOptionTypes[option.type] || option.type
-            option.channel_types = option.channel_types.map(type => ChannelTypes[type])
-            return option
-        })
+        if (json.options) {
+            json.options = json.options.map(option => {
+                option.type = applicationCommandOptionTypes[option.type] || option.type
+                option.channel_types = option.channel_types.map(type => ChannelTypes[type])
+                return option
+            })
+        }
         json.type = applicationCommandTypes[json.type] || json.type
         return json
     }
@@ -362,6 +387,7 @@ module.exports = {
     Emoji,
     Embed,
     Button,
+    SelectMenu,
     Text,
     applicationCommand,
     ActionRow,
