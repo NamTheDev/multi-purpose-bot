@@ -17,14 +17,17 @@ module.exports = new Command('help',
     async function (message, args) {
         const commands = await client.getCommands()
         const prefix = await getPrefix(client)
-        const helpSlashCommand = commands.find(command => command.name === 'help')
-        const pingSlashCommand = commands.find(command => command.name === 'ping')
+        let helpSlashCommand = commands.find(command => command.name === 'help')
+        helpSlashCommand = `</${helpSlashCommand.name}:${helpSlashCommand.id}>`
+        let pingSlashCommand = commands.find(command => command.name === 'ping')
+        pingSlashCommand = `</${pingSlashCommand.name}:${pingSlashCommand.id}>`
         const toReplaceItems = { prefix, helpSlashCommand, pingSlashCommand }
         const helpMenuMarkdown = readFileSync(join(process.cwd(), 'md', 'help_menu.md'), 'utf-8')
         const helpMenuPages = readdirSync(join(process.cwd(), 'md', 'help_menu_pages')).map(fileName => fileName.split(".")[0])
         await reply(message, {
             content: helpMenuMarkdown
                 .replace('{authorName}', message.author.username)
+                .replace('{helpSlashCommand}', helpSlashCommand)
                 .split('{prefix}').join(prefix),
             components: [
                 new ActionRow(
