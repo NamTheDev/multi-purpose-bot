@@ -7,4 +7,4 @@
 ### 2. Slash commands
 - Are application commands that require users to use slash instead of any other prefixes.
 - **Example**: {pingSlashCommand}
-> To get all slashCommands, either type `/` or use: {helpSlashCommand}
+> To get all slash commands, either type `/` or use: {helpSlashCommand}
