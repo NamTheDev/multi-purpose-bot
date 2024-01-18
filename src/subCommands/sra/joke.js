@@ -1,7 +1,7 @@
 const { Command } = require("eris");
 const { SRA_Fetch } = require("../../../utils/functions");
 const { reply } = require("../../../utils/methods");
-const { Embed } = require("../../../utils/structures");
+const { Embed } = require("../../../utils/classes");
 
 module.exports = new Command('joke',
     /**

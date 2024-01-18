@@ -1,6 +1,6 @@
 const { CommandInteraction, ComponentInteraction } = require("eris");
 const { client, interactionCollection, slashCommandCallbackCollection } = require("..");
-const { ComponentTypes, ChannelTypes } = require("../../utils/structures");
+const { ComponentTypes, ChannelTypes } = require("../../utils/types");
 
 client.on('interactionCreate',
     /**

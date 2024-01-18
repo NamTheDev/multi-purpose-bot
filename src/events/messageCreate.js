@@ -1,6 +1,6 @@
 const { client, messageCollection } = require("..")
 const { reply } = require("../../utils/methods");
-const { ChannelTypes } = require("../../utils/structures");
+const { ChannelTypes } = require("../../utils/types");
 client.on('messageCreate', async (message) => {
     if(message.author.bot) return;
     const collect = messageCollection.get('collect' + message.author.id + message.channel.id)

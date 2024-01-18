@@ -1,9 +1,10 @@
 const { Command, Message } = require("eris");
 const { chunkArray, SRA_Fetch } = require("../../../utils/functions");
-const { Embed, Button, ButtonStyles, Emoji, ActionRow, ComponentTypes } = require("../../../utils/structures");
+const { Embed, Button, Emoji, ActionRow } = require("../../../utils/classes");
 const { reply } = require("../../../utils/methods");
 const { InteractionCollector } = require("../../../utils/collectors");
-const ms = require("ms");
+const { ComponentTypes } = require("../../../utils/types");
+const { ButtonStyles } = require("../../../utils/styles");
 
 module.exports = new Command('lyrics',
     /**

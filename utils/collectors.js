@@ -20,15 +20,17 @@ class MessageCollector {
     }
     /**
      * @param {{
-     * message: Message | CommandInteraction,
+     * message: Message,
+     * interaction: CommandInteraction,
      * filter: function(Message),
      * time: number
      * }} options 
      */
     constructor(options) {
-        const { message } = options
-        const userID = this.userID = message.author ? message.author.id : message.user.id
-        const channelID = this.channelID = message.channel.id
+        const { message, interaction } = options
+        const input = message ? message : interaction
+        const userID = this.userID = input.author ? input.author.id : input.user.id
+        const channelID = this.channelID = input.channel.id
         if (typeof options.filter === 'function') messageCollection.set('filter' + userID + channelID, options.filter);
         const interval = setInterval(async () => {
             const end = messageCollection.get('end' + userID + channelID)
@@ -71,15 +73,17 @@ class InteractionCollector {
     }
     /**
      * @param {{
-     * message: Message | CommandInteraction,
+     * message: Message,
+     * interaction: CommandInteraction,
      * filter: function(ComponentInteraction | CommandInteraction),
      * time: number
      * }} options 
      */
     constructor(options) {
-        const { message } = options
-        const userID = this.userID = message.author ? message.author.id : message.user.id
-        const channelID = this.channelID = message.channel.id
+        const { message, interaction } = options
+        const input = message ? message : interaction
+        const userID = this.userID = input.author ? input.author.id : input.user.id
+        const channelID = this.channelID = input.channel.id
         if (typeof options.filter === 'function') interactionCollection.set('filter' + userID + channelID, options.filter);
         const interval = setInterval(async () => {
             const end = interactionCollection.get('end' + userID + channelID)
@@ -93,7 +97,7 @@ class InteractionCollector {
                 clearTimeout(timeout)
             }
         }, 500)
-        if(options.time) timeout = setTimeout(async () => {
+        if (options.time) timeout = setTimeout(async () => {
             const end = interactionCollection.get('end' + userID + channelID)
             const stop = interactionCollection.get('stop' + userID + channelID)
             clearInterval(interval)

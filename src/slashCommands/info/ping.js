@@ -1,9 +1,9 @@
 const { CommandInteraction } = require("eris");
 const { client } = require("../..");
 const { reply } = require("../../../utils/methods");
-const { applicationCommand } = require("../../../utils/structures");
+const { ApplicationCommand } = require("../../../utils/classes");
 
-module.exports = new applicationCommand({
+module.exports = new ApplicationCommand({
     name: 'ping',
     description: "Got bot's ping",
     /**

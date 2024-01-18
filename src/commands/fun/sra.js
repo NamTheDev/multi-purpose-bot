@@ -1,7 +1,7 @@
 const { Command, Message } = require("eris");
 const Color = require("color");
 const { getSubcommands, getPrefix } = require("../../../utils/functions");
-const { Embed } = require("../../../utils/structures");
+const { Embed } = require("../../../utils/classes");
 const { reply } = require("../../../utils/methods");
 const { client } = require("../..");
 const { subCommands } = getSubcommands('sra')

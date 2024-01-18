@@ -1,5 +1,5 @@
 const { Command, Message } = require("eris");
-const { Embed, Text } = require("../../../utils/structures");
+const { Embed, Text } = require("../../../utils/classes");
 const { SRA_Fetch } = require("../../../utils/functions");
 const { randomNumber } = require("multi-purpose");
 const { reply } = require("../../../utils/methods");

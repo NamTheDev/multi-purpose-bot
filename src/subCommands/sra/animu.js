@@ -1,7 +1,6 @@
 const { Command, Message } = require("eris");
-const { client } = require("../..");
 const { SRA_Fetch } = require("../../../utils/functions");
-const { Embed } = require("../../../utils/structures");
+const { Embed } = require("../../../utils/classes");
 const { default: fetch } = require("node-fetch");
 const { reply } = require("../../../utils/methods");
 
