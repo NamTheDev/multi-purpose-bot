@@ -11,6 +11,7 @@ client.on('interactionCreate',
         interaction.user = client.users.get(interaction.member.id)
         if (interaction.user.bot) return;
         const command = slashCommandCallbackCollection.get(interaction.data.name)
+        console.log(command)
         if(command) {
             const args = interaction.data.options
             return await command.execute(interaction, args)

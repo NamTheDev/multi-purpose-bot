@@ -16,7 +16,6 @@ const messageCollection = new Map()
 const interactionCollection = new Map()
 const slashCommandCallbackCollection = new Map()
 module.exports = { client, data, messageCollection, interactionCollection, slashCommandCallbackCollection, baseDirname: __dirname }
-
 const handlers = readdirSync(join(__dirname, 'handlers'))
 for ( const handlerFile of handlers) {
     require(join(__dirname, 'handlers', handlerFile))
