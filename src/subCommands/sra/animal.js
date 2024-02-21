@@ -9,7 +9,8 @@ module.exports = new Command('animal',
      * @param {Message} message 
      * @param {string[]} args 
      */
-    async function (message, args, prefix) {
+    async function ({message, args, prefix}) {
+        console.log(prefix)
         const animals = ['bird', 'cat', 'dog', 'fox', 'kangaroo', 'koala', 'panda', 'raccoon', 'red_panda', 'random']
         if (!animals.includes(args[0]))
             return await reply(message, `# Available usage:\n${animals.map((animal, index) => `${index + 1}. \`\`\`${prefix} sra animal ${animal}\`\`\``).join('\n')}`)

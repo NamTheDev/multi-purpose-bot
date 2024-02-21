@@ -12,6 +12,7 @@ module.exports = new ApplicationCommand({
      * @param {string[]} args
      */
     execute: async function (interaction, args) {
-        return await reply(interaction, `# Pong! 🏓\n\`\`\`${Date.now() - interaction.createdAt}ms\`\`\``)
+        await interaction.defer()
+        return await reply(interaction, `# Pong! 🏓\n\`\`\`${Date.now() - interaction.createdAt}ms\`\`\``, null)
     }
 })

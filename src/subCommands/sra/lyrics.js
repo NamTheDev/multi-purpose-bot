@@ -12,7 +12,7 @@ module.exports = new Command('lyrics',
      * @param {Message} message 
      * @param {string[]} args 
      */
-    async function (message, args) {
+    async function ({message, args}) {
         const { lyrics, title, author, thumbnail, links, disclaimer, error } = await SRA_Fetch('others', 'lyrics', [args.join(' ') ? `title=${args.join(' ')}` : ''])
         if (error) throw (error);
         const thumbnailUrl = thumbnail.genius

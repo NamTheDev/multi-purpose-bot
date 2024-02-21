@@ -17,7 +17,7 @@ const command = new Command('some-random-api',
         if (subCommand) {
             args.shift()
             try {
-                return await subCommand.executeCommand(message, args)
+                return await subCommand.executeCommand({message, args, prefix})
             } catch (e) {
                 if(`${e}`.toLowerCase().includes('typeerror')) console.log(e);
                 return await reply(message, {

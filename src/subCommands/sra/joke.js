@@ -8,7 +8,7 @@ module.exports = new Command('joke',
      * 
      * @param {Message} message 
      */
-    async function (message) {
+    async function ({message}) {
         const { joke } = await SRA_Fetch('others', 'joke')
         await reply(message, {
             embeds: [

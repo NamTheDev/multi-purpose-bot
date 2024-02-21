@@ -3,6 +3,7 @@ const { MessageCollector } = require('../../../utils/collectors')
 const ms = require("ms");
 const { getScrambledWordQuestions } = require("multi-purpose");
 const { reply } = require("../../../utils/methods");
+const { client } = require("../..");
 
 module.exports = new Command('scramble',
     /**
@@ -49,4 +50,20 @@ module.exports = new Command('scramble',
                     return message.channel.createMessage(`# Out of time.\n> The word is: **${original}**`)
                 }
             })
-    }, { description: 'Guess the scrambled word', fullDescription: 'A game for guessing scrambled word.\n> **Words are generated using this API**: https://random-word-api.vercel.app.' })
+    }, {
+    description: 'Guess the scrambled word',
+    fullDescription: 'A game for guessing scrambled word.\n> **Words are generated using this API**: https://random-word-api.vercel.app.',
+    cooldown: ms('15s'),
+    cooldownMessage: async (message) => {
+        const msg = await message.channel.createMessage(`Command on cooldown! Try again <t:${Math.floor((Date.now() + message.command.cooldown) / 1000)}:R>`)
+        const interval = setInterval(async () => {
+            const check = message.command.cooldownCheck(message)
+            console.log(check)
+            if(check) {
+                await msg.delete()
+                clearInterval(interval)
+            }
+        }, 1000)
+    },
+    cooldownReturns: 1,
+})

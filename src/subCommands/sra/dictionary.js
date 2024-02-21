@@ -9,7 +9,7 @@ module.exports = new Command('dictionary',
      * @param {Message} message 
      * @param {string[]} args 
      */
-    async function (message, args) {
+    async function ({message, args}) {
         const { word, definition, error } = await SRA_Fetch('others', 'dictionary', [`word=${args[0]}`])
         if (error) throw (error);
         await reply(message, {

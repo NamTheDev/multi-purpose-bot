@@ -11,7 +11,7 @@ module.exports = new Command('help',
     /**
      * 
      * @param {Message} message 
-     * @param {string[]} args 
+     * @param {string[]} args
      * @returns 
      */
     async function (message, args) {

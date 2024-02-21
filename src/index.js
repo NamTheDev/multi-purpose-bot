@@ -12,6 +12,7 @@ const client = new CommandClient(process.env.TOKEN, {
         guildOnly: true
     }
 })
+
 const messageCollection = new Map()
 const interactionCollection = new Map()
 const slashCommandCallbackCollection = new Map()
