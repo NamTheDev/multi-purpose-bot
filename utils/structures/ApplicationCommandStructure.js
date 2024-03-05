@@ -13,7 +13,7 @@ const ApplicationCommandOptionStructure = require("./ApplicationCommandOptionStr
 * default_member_permissions: ?string,
 * dm_permission: boolean,
 * nsfw: boolean,
-* execute: function(import("eris").CommandInteraction, string[])
+* execute: function(import("eris").CommandInteraction, string[]): void
 * }} 
 */
 let ApplicationCommandStructure;
